@@ -1,7 +1,7 @@
 // Copyright 2016 <ggarber@github>
 
-#ifndef TEMPLATE_H
-#define TEMPLATE_H
+#ifndef SRC_LOOP_HPP_
+#define SRC_LOOP_HPP_
 
 #include <memory>
 
@@ -22,4 +22,4 @@ class Loop {
 
 }  // namespace bootstrap
 
-#endif  // TEMPLATE_H
+#endif  // SRC_LOOP_HPP_

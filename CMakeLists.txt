@@ -28,7 +28,7 @@ add_custom_target (hfcca
   COMMENT "Running hfcca")
 
 add_custom_target (valgrind
-  COMMAND valgrind --tool=memcheck --leak-check=full make test
+  COMMAND valgrind --tool=memcheck --leak-check=full --error-exitcode=-1 ${PROJECT_BINARY_DIR}/test/LoopTest
   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
   COMMENT "Running valgrind")
 

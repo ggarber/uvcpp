@@ -1,7 +1,7 @@
 // Copyright 2016 <ggarber@github>
 
-#ifndef TEMPLATE_H
-#define TEMPLATE_H
+#ifndef SRC_TEMPLATE_HPP_
+#define SRC_TEMPLATE_HPP_
 
 namespace bootstrap {
 
@@ -14,4 +14,4 @@ class Template {
 
 }
 
-#endif  // TEMPLATE_H
+#endif  // SRC_TEMPLATE_HPP_
