@@ -1,0 +1,28 @@
+# Enable C++ support
+language: cpp
+# Compiler selection
+compiler:
+  - clang
+  - gcc
+install:
+  - pip install hfcca
+  - pip install cpplint
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - george-edison55-precise-backports
+    packages:
+      - cmake
+      - cmake-data
+      - gcc-4.9
+      - g++-4.9
+      - valgrind
+      - cppcheck
+# Build steps
+script:
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
+  - make review
