@@ -4,9 +4,10 @@ language: cpp
 compiler:
   - clang
   - gcc
-install:
-  - pip install hfcca
-  - pip install cpplint
+before_script:
+  - export PATH=$HOME/.local/bin:$PATH
+  - pip install --user hfcca
+  - pip install --user cpplint
 addons:
   apt:
     sources:
