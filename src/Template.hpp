@@ -12,6 +12,6 @@ class Template {
   int sum(int a, int b) const;
 };
 
-}
+}  // namespace uvcpp
 
 #endif  // SRC_TEMPLATE_HPP_

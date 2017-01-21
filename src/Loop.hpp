@@ -20,6 +20,6 @@ class Loop {
   std::unique_ptr<uv_loop_t, void(*)(uv_loop_t*)> loop_;
 };
 
-}  // namespace bootstrap
+}  // namespace uvcpp
 
 #endif  // SRC_LOOP_HPP_

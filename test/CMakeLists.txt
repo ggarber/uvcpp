@@ -1,5 +1,3 @@
-include_directories (${CMAKE_SOURCE_DIR}/src)
-
 include (CTest)
 
 file (GLOB_RECURSE TESTS . *Test.cpp)
