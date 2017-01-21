@@ -4,7 +4,7 @@
 
 #include "Loop.hpp"
 
-using bootstrap::Loop;
+using uvcpp::Loop;
 
 class LoopTest: public ::testing::Test {
  protected:

@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-using bootstrap::Loop;
+using uvcpp::Loop;
 
 Loop::Loop(): loop_(new uv_loop_t, [](uv_loop_t *loop) { uv_loop_close(loop); delete loop; }) {
   // Testing valgrind works

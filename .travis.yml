@@ -18,6 +18,7 @@ addons:
       - cmake-data
       - gcc-4.9
       - g++-4.9
+      - doxygen
       - valgrind
       - cppcheck
 # Build steps
@@ -26,4 +27,5 @@ script:
   - cd build
   - cmake ..
   - make
+  - ctest -j 10 -T memcheck
   - make review

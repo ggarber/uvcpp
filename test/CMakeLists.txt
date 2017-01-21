@@ -1,6 +1,6 @@
 include_directories (${CMAKE_SOURCE_DIR}/src)
 
-enable_testing ()
+include (CTest)
 
 file (GLOB_RECURSE TESTS . *Test.cpp)
 

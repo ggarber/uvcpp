@@ -3,7 +3,7 @@
 #ifndef SRC_TEMPLATE_HPP_
 #define SRC_TEMPLATE_HPP_
 
-namespace bootstrap {
+namespace uvcpp {
 
 class Template {
  public:
