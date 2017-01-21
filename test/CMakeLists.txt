@@ -1,6 +1,6 @@
-include_directories (${CMAKE_SOURCE_DIR}/src)
+gitinclude (CTest)
 
-include (CTest)
+include_directories (${CMAKE_SOURCE_DIR}/src)
 
 file (GLOB_RECURSE TESTS . *Test.cpp)
 
