@@ -33,5 +33,5 @@ add_custom_target (hfcca
 #   COMMENT "Running valgrind")
 
 add_custom_target (review
-  DEPENDS cppcheck cpplint hfcca valgrind
+  DEPENDS cppcheck cpplint hfcca
   COMMENT "Running all checks")
