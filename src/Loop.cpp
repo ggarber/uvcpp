@@ -10,7 +10,7 @@ using uvcpp::Loop;
 
 Loop::Loop(): loop_(new uv_loop_t, [](uv_loop_t *loop) { uv_loop_close(loop); delete loop; }) {
   // Testing valgrind works
-  new uv_loop_t();
+  // new uv_loop_t();
   uv_loop_init(loop_.get());
 }
 
