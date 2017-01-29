@@ -1,4 +1,6 @@
-# uvcpp 
+# uvcpp
+
+C++ Wrapper for libuv
 
 # How to use
 ```

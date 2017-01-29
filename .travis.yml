@@ -1,12 +1,15 @@
 # Enable C++ support
 language: cpp
-# Compiler selection
+
 compiler:
   - clang
   - gcc
-install:
-  - pip install hfcca
-  - pip install cpplint
+
+before_script:
+  - export PATH=$HOME/.local/bin:$PATH
+  - pip install --user hfcca
+  - pip install --user cpplint
+
 addons:
   apt:
     sources:
@@ -17,12 +20,14 @@ addons:
       - cmake-data
       - gcc-4.9
       - g++-4.9
+      - doxygen
       - valgrind
       - cppcheck
-# Build steps
+
 script:
   - mkdir build
   - cd build
   - cmake ..
   - make
+  - ctest -j 10 -T memcheck
   - make review

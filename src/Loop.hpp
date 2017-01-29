@@ -1,13 +1,13 @@
 // Copyright 2016 <ggarber@github>
 
-#ifndef TEMPLATE_H
-#define TEMPLATE_H
+#ifndef SRC_LOOP_HPP_
+#define SRC_LOOP_HPP_
 
 #include <memory>
 
 typedef struct uv_loop_s uv_loop_t;
 
-namespace bootstrap {
+namespace uvcpp {
 
 class Loop {
  public:
@@ -20,6 +20,6 @@ class Loop {
   std::unique_ptr<uv_loop_t, void(*)(uv_loop_t*)> loop_;
 };
 
-}  // namespace bootstrap
+}  // namespace uvcpp
 
-#endif  // TEMPLATE_H
+#endif  // SRC_LOOP_HPP_

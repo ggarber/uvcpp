@@ -27,11 +27,11 @@ add_custom_target (hfcca
   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
   COMMENT "Running hfcca")
 
-add_custom_target (valgrind
-  COMMAND valgrind --tool=memcheck --leak-check=full make test
-  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-  COMMENT "Running valgrind")
+# add_custom_target (valgrind
+#   COMMAND valgrind --tool=memcheck --leak-check=full --error-exitcode=-1 ${PROJECT_BINARY_DIR}/test/LoopTest
+#   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+#   COMMENT "Running valgrind")
 
 add_custom_target (review
-  DEPENDS cppcheck cpplint hfcca valgrind
+  DEPENDS cppcheck cpplint hfcca
   COMMENT "Running all checks")

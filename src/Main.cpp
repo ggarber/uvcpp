@@ -3,7 +3,7 @@
 #include "Loop.hpp"
 
 int main(int argc, char *argv[]) {
-    bootstrap::Loop loop;
+    uvcpp::Loop loop;
     loop.run();
 
     return 0;

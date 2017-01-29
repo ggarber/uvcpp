@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-using bootstrap::Template;
+using uvcpp::Template;
 
 void Template::run() const {
   std::cout << "Hello world!\n";

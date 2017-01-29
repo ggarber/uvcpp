@@ -4,7 +4,7 @@
 
 #include "Template.hpp"
 
-using bootstrap::Template;
+using uvcpp::Template;
 
 class TemplateTest: public ::testing::Test {
  protected:
