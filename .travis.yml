@@ -1,9 +1,12 @@
 # Enable C++ support
 language: cpp
 
-compiler:
-  - clang
-  - gcc
+matrix:
+  include:
+    - compiler: gcc
+      env: COMPILER=g++-6
+    - compiler: clang
+
 
 before_script:
   - export PATH=$HOME/.local/bin:$PATH
@@ -18,8 +21,8 @@ addons:
     packages:
       - cmake
       - cmake-data
-      - gcc-4.9
-      - g++-4.9
+      - gcc-6
+      - g++-6
       - doxygen
       - valgrind
       - cppcheck
