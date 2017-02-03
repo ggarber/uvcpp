@@ -1,7 +1,7 @@
 // Copyright 2016 <ggarber@github>
 
-#ifndef SRC_TEMPLATE_HPP_
-#define SRC_TEMPLATE_HPP_
+#ifndef SRC_SIGNAL_HPP_
+#define SRC_SIGNAL_HPP_
 
 namespace uvcpp {
 
@@ -14,4 +14,4 @@ class Signal {
 
 }  // namespace uvcpp
 
-#endif  // SRC_TEMPLATE_HPP_
+#endif  // SRC_SIGNAL_HPP_

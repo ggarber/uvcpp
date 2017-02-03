@@ -67,7 +67,9 @@ void UdpSocket::listen(ushort port) {
 }
 
 void UdpSocket::close() {
-  uv_close(uv_handle(&socket_), nullptr);
+  if (!uv_is_closing(uv_handle(ptr()))) {
+    uv_close(uv_handle(&socket_), nullptr);
+  }
 }
 
 void UdpSocket::send(const Buffer& data) {

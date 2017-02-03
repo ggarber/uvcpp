@@ -7,7 +7,7 @@ namespace uvcpp {
 
 class Socket {
  public:
-  virtual ~Socket() = default;
+  virtual ~Socket();
 };
 
 }  // namespace uvcpp

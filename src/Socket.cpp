@@ -5,3 +5,6 @@
 #include <iostream>
 
 using uvcpp::Socket;
+
+Socket::~Socket() {
+}
