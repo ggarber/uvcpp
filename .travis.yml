@@ -1,9 +1,10 @@
-# Enable C++ support
 language: cpp
 
-compiler:
-  - clang
-  - gcc
+matrix:
+  include:
+    - compiler: gcc
+      install: export CXX=g++-4.9 CC=gcc-4.9
+    - compiler: clang
 
 before_script:
   - export PATH=$HOME/.local/bin:$PATH
@@ -18,8 +19,8 @@ addons:
     packages:
       - cmake
       - cmake-data
-      - gcc-4.9
       - g++-4.9
+      - gcc-4.9
       - doxygen
       - valgrind
       - cppcheck

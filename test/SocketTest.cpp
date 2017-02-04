@@ -2,17 +2,17 @@
 
 #include "gtest/gtest.h"
 
-#include "Loop.hpp"
+#include "Socket.hpp"
 
-using uvcpp::Loop;
+using uvcpp::Socket;
 
-class LoopTest: public ::testing::Test {
+class SocketTest: public ::testing::Test {
  protected:
-  LoopTest() {
+  SocketTest() {
     // You can do set-up work for each test here.
   }
 
-  virtual ~LoopTest() {
+  virtual ~SocketTest() {
     // You can do clean-up work that doesn't throw exceptions here.
   }
 
@@ -28,18 +28,7 @@ class LoopTest: public ::testing::Test {
     // Code here will be called immediately after each test (right
     // before the destructor).
   }
-
-  // Objects declared here can be used by all tests in the test case for Foo.
-  Loop loop;
 };
 
-TEST_F(LoopTest, Constructor) {
-}
-
-TEST_F(LoopTest, Run) {
-  loop.run();
-}
-
-TEST_F(LoopTest, CreateUdpSocket) {
-  auto udp = loop.udp();
+TEST_F(SocketTest, SmokeTest) {
 }

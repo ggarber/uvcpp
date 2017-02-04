@@ -2,17 +2,17 @@
 
 #include "gtest/gtest.h"
 
-#include "Loop.hpp"
+#include "Signal.hpp"
 
-using uvcpp::Loop;
+using uvcpp::Signal;
 
-class LoopTest: public ::testing::Test {
+class SignalTest: public ::testing::Test {
  protected:
-  LoopTest() {
+  SignalTest() {
     // You can do set-up work for each test here.
   }
 
-  virtual ~LoopTest() {
+  virtual ~SignalTest() {
     // You can do clean-up work that doesn't throw exceptions here.
   }
 
@@ -30,16 +30,13 @@ class LoopTest: public ::testing::Test {
   }
 
   // Objects declared here can be used by all tests in the test case for Foo.
-  Loop loop;
+  Signal foo;
 };
 
-TEST_F(LoopTest, Constructor) {
-}
-
-TEST_F(LoopTest, Run) {
-  loop.run();
-}
-
-TEST_F(LoopTest, CreateUdpSocket) {
-  auto udp = loop.udp();
+TEST_F(SignalTest, SmokeTest) {
+  int x1 = 1;
+  int x2 = 2;
+  int expected = 3;
+  int actual = foo.sum(x1, x2);
+  ASSERT_EQ(expected, actual);
 }
