@@ -5,6 +5,9 @@
 
 #include "gtest/gtest.h"
 
+#include <mutex>
+#include <condition_variable>
+
 #include "Loop.hpp"
 #include "Udp.hpp"
 
