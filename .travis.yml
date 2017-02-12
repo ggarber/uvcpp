@@ -5,6 +5,7 @@ matrix:
     - compiler: gcc
       install: export CXX=g++-4.9 CC=gcc-4.9
     - compiler: clang
+      install: export CXX=clang++-3.5 CC=clang-3.5
 
 before_script:
   - export PATH=$HOME/.local/bin:$PATH
@@ -19,6 +20,7 @@ addons:
     packages:
       - cmake
       - cmake-data
+      - clang++-3.5
       - g++-4.9
       - gcc-4.9
       - doxygen
