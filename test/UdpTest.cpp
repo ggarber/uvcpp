@@ -56,6 +56,7 @@ TEST_F(UdpSocketTest, CloseAfterListen) {
 
 TEST_F(UdpSocketTest, SendAndRecv) {
   UdpSocket udp1(&loop), udp2(&loop);
+
   udp1.listen(); udp2.listen(6868);
 
   std::mutex m;

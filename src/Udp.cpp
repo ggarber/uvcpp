@@ -51,6 +51,7 @@ void on_recv(uv_udp_t* handle,
 
 void on_send(uv_udp_send_t *req, int status) {
   spdlog::get("uvcpp")->info("UdpSocket::on_send {}", status);
+
   if (status == -1) {
     fprintf(stderr, "Send error!\n");
     return;
@@ -96,6 +97,5 @@ void UdpSocket::send(const Buffer& data) {
   uv_udp_send_t req;
   uv_buf_t buffer = uv_buf_init((char*) malloc(256), 256);
   //on_alloc(uv_handle(ptr()), 256, &buffer);
-  free(buffer.base);
   uv_guard(uv_udp_send(&req, ptr(), &buffer, 1, (const struct sockaddr*) &addr, on_send));
 }
