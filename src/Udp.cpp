@@ -5,11 +5,15 @@
 #include <exception>
 #include <iostream>
 
+#include <spdlog/spdlog.h>
+
 #include "Uv.hpp"
 #include "Loop.hpp"
+#include "Buffer.hpp"
 
 using uvcpp::Loop;
 using uvcpp::UdpSocket;
+using uvcpp::Buffer;
 using uvcpp::uv_handle;
 
 static void uv_guard(int res) {
@@ -35,10 +39,18 @@ void on_recv(uv_udp_t* handle,
     return;
   }
 
+  spdlog::get("uvcpp")->info("UdpSocket::on_recv");
+
+  auto socket = reinterpret_cast<UdpSocket*>(handle->data);
+  Buffer buffer;
+  ::memcpy(buffer.data.data(), buf->base, nread);
+  socket->Data(buffer);
+
   free(buf->base);
 }
 
 void on_send(uv_udp_send_t *req, int status) {
+  spdlog::get("uvcpp")->info("UdpSocket::on_send {}", status);
   if (status == -1) {
     fprintf(stderr, "Send error!\n");
     return;
@@ -46,7 +58,10 @@ void on_send(uv_udp_send_t *req, int status) {
 }
 
 UdpSocket::UdpSocket(Loop* loop) {
+  spdlog::get("uvcpp")->info("UdpSocket:");
+
   uv_guard(uv_udp_init(loop->ptr(), &socket_));
+  socket_.data = this;
 }
 
 void UdpSocket::listen() {
@@ -73,11 +88,14 @@ void UdpSocket::close() {
 }
 
 void UdpSocket::send(const Buffer& data) {
-  struct sockaddr_in6 addr;
-  uv_guard(uv_ip6_addr("::", 6868, &addr));
+  spdlog::get("uvcpp")->info("UdpSocket::send");
+
+  struct sockaddr_in addr;
+  uv_guard(uv_ip4_addr("127.0.0.1", 6868, &addr));
 
   uv_udp_send_t req;
-  uv_buf_t buffer;
-  on_alloc(uv_handle(ptr()), 256, &buffer);
-  uv_guard(uv_udp_send(&req, &socket_, &buffer, 1, (const struct sockaddr*) &addr, on_send));
+  uv_buf_t buffer = uv_buf_init((char*) malloc(256), 256);
+  //on_alloc(uv_handle(ptr()), 256, &buffer);
+  free(buffer.base);
+  uv_guard(uv_udp_send(&req, ptr(), &buffer, 1, (const struct sockaddr*) &addr, on_send));
 }

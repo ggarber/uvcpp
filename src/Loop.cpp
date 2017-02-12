@@ -3,6 +3,7 @@
 #include "Loop.hpp"
 
 #include <uv.h>
+#include <spdlog/spdlog.h>
 
 #include <iostream>
 
@@ -16,8 +17,11 @@ Loop::Loop(): loop_(new uv_loop_t, [](uv_loop_t *loop) { uv_loop_close(loop); de
 }
 
 void Loop::run() {
+  spdlog::get("uvcpp")->info("Loop::begin");
+
   int res = uv_run(ptr(), UV_RUN_DEFAULT);
-  printf("sniff %d", res);
+
+  spdlog::get("uvcpp")->info("Loop::end");
 }
 
 std::unique_ptr<UdpSocket> Loop::udp() {
