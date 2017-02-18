@@ -1,4 +1,4 @@
-// Copyright 2016 <ggarber@github>
+// Copyright 2017 <ggarber@github>
 
 #ifndef SRC_LOOP_HPP_
 #define SRC_LOOP_HPP_

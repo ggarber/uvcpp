@@ -1,11 +1,11 @@
-// Copyright 2016 <ggarber@github>
+// Copyright 2017 <ggarber@github>
 
 #include "Udp.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include <exception>
 #include <iostream>
-
-#include <spdlog/spdlog.h>
 
 #include "Uv.hpp"
 #include "Loop.hpp"
@@ -95,7 +95,7 @@ void UdpSocket::send(const Buffer& data) {
   uv_guard(uv_ip4_addr("127.0.0.1", 6868, &addr));
 
   uv_udp_send_t req;
-  uv_buf_t buffer = uv_buf_init((char*) malloc(256), 256);
-  //on_alloc(uv_handle(ptr()), 256, &buffer);
+  uv_buf_t buffer = uv_buf_init(reinterpret_cast<char*>(malloc(256)), 256);
+  // on_alloc(uv_handle(ptr()), 256, &buffer);
   uv_guard(uv_udp_send(&req, ptr(), &buffer, 1, (const struct sockaddr*) &addr, on_send));
 }
