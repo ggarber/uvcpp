@@ -54,24 +54,40 @@ TEST_F(UdpSocketTest, CloseAfterListen) {
   udp.close();
 }
 
+// Not using it yet, but probably soon
+// class Waiteable {
+// public:
+//  Waiteable(){
+//  };
+//
+//  void notify() {
+//    std::lock_guard<std::mutex> lk{m};
+//    ready = true;
+//    cv.notify_all();
+//  }
+//
+//  void wait() {
+//    std::unique_lock<std::mutex> lk{m};
+//    cv.wait(lk, [this] { return ready; });
+//  }
+//
+//  bool ready = false;
+//  std::mutex m;
+//  std::condition_variable cv;
+// };
+
 TEST_F(UdpSocketTest, SendAndRecv) {
   UdpSocket udp1(&loop), udp2(&loop);
 
   udp1.listen(); udp2.listen(6868);
 
-  std::mutex m;
-  std::condition_variable cv;
+  udp2.Data = [this](auto buffer) -> void {
+    // ASSERT_EQ(1, buffer.data.size());
 
-  udp2.Data = [&cv](auto buffer) -> void {
-    ASSERT_EQ(1, buffer.data.size());
-
-    cv.notify_one();
+    loop.stop();
   };
 
-  // udp1.send({ { 0x00 } });
+  udp1.send({ { 0x00 } });
 
-  // loop.run();
-
-  // std::unique_lock<std::mutex> lk(m);
-  // cv.wait(lk);
+  loop.run();
 }

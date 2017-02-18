@@ -22,6 +22,7 @@ class Loop {
 
  public:
   void run();
+  void stop();
 
   std::unique_ptr<uvcpp::UdpSocket> udp();
   std::unique_ptr<uvcpp::TcpSocket> tcp();

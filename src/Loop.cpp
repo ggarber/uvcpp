@@ -24,6 +24,10 @@ void Loop::run() {
   spdlog::get("uvcpp")->info("Loop::end");
 }
 
+void Loop::stop() {
+  uv_stop(ptr());
+}
+
 std::unique_ptr<UdpSocket> Loop::udp() {
   return std::make_unique<UdpSocket>(this);
 }

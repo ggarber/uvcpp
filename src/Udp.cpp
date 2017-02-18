@@ -18,10 +18,16 @@ using uvcpp::uv_handle;
 
 static void uv_guard(int res) {
   if (res < 0) {
-    printf("Error %d", res);
+    printf("Error %d %s", res, uv_strerror(res));
     throw std::exception();
   }
 }
+
+class SendData {
+ public:
+  SendData() { req.data = this; }
+  uv_udp_send_t req;
+};
 
 void on_alloc(uv_handle_t* handle, size_t suggested_size, uv_buf_t* buf) {
   buf->base = reinterpret_cast<char*>(malloc(suggested_size));
@@ -50,16 +56,17 @@ void on_recv(uv_udp_t* handle,
 }
 
 void on_send(uv_udp_send_t *req, int status) {
-  spdlog::get("uvcpp")->info("UdpSocket::on_send {}", status);
+  spdlog::get("uvcpp")->info("UdpSocket::on_send {}", uv_strerror(status));
 
-  if (status == -1) {
-    fprintf(stderr, "Send error!\n");
+  auto wrap = reinterpret_cast<SendData*>(req->data);
+  delete wrap;
+  if (status < 0) {
     return;
   }
 }
 
 UdpSocket::UdpSocket(Loop* loop) {
-  spdlog::get("uvcpp")->info("UdpSocket:");
+  SPDLOG_DEBUG(spdlog::get("uvcpp"), "UdpSocket:");
 
   uv_guard(uv_udp_init(loop->ptr(), &socket_));
   socket_.data = this;
@@ -74,8 +81,8 @@ UdpSocket::~UdpSocket() {
 }
 
 void UdpSocket::listen(ushort port) {
-  struct sockaddr_in6 addr;
-  uv_guard(uv_ip6_addr("::", port, &addr));
+  struct sockaddr_in addr;
+  uv_guard(uv_ip4_addr("0.0.0.0", port, &addr));
 
   uv_guard(uv_udp_bind(&socket_, (const struct sockaddr*) &addr, 0));
 
@@ -89,13 +96,13 @@ void UdpSocket::close() {
 }
 
 void UdpSocket::send(const Buffer& data) {
-  spdlog::get("uvcpp")->info("UdpSocket::send");
+  SPDLOG_DEBUG(spdlog::get("uvcpp"), "UdpSocket::send");
 
   struct sockaddr_in addr;
   uv_guard(uv_ip4_addr("127.0.0.1", 6868, &addr));
 
-  uv_udp_send_t req;
-  uv_buf_t buffer = uv_buf_init(reinterpret_cast<char*>(malloc(256)), 256);
-  // on_alloc(uv_handle(ptr()), 256, &buffer);
-  uv_guard(uv_udp_send(&req, ptr(), &buffer, 1, (const struct sockaddr*) &addr, on_send));
+  auto wrap = new SendData();
+  uv_buf_t buffer;
+  on_alloc(uv_handle(ptr()), 256, &buffer);
+  uv_guard(uv_udp_send(&wrap->req, ptr(), &buffer, 1, (const struct sockaddr*) &addr, on_send));
 }
