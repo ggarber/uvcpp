@@ -13,7 +13,7 @@ externalproject_add (spdlog_project
   UPDATE_COMMAND ""
   CONFIGURE_COMMAND ""
   BUILD_COMMAND ""
-  INSTALL_COMMAND cp -R include/spdlog ${CMAKE_BINARY_DIR}/ext/include/spdlog
+  INSTALL_COMMAND mkdir -p ${CMAKE_BINARY_DIR}/ext/include && cp -R include/spdlog ${CMAKE_BINARY_DIR}/ext/include/spdlog
 )
 
 externalproject_add (gtest_project
@@ -28,7 +28,7 @@ externalproject_add (libuv_project
   GIT_TAG v1.x
   BUILD_IN_SOURCE 1
   UPDATE_COMMAND ""
-  CONFIGURE_COMMAND ./autogen.sh COMMAND ./configure --prefix=${CMAKE_BINARY_DIR}/ext
+  CONFIGURE_COMMAND ./autogen.sh COMMAND ./configure --prefix=${CMAKE_BINARY_DIR}/ext --enable-shared=no
   BUILD_COMMAND make
   INSTALL_COMMAND make install
 )
