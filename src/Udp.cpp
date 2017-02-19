@@ -25,8 +25,9 @@ static void uv_guard(int res) {
 
 class SendData {
  public:
-  SendData() { req.data = this; }
+  explicit SendData(UdpSocket* udp): udp(udp) { req.data = this; }
   uv_udp_send_t req;
+  UdpSocket* udp;
 };
 
 void on_alloc(uv_handle_t* handle, size_t suggested_size, uv_buf_t* buf) {
@@ -59,6 +60,7 @@ void on_send(uv_udp_send_t *req, int status) {
   spdlog::get("uvcpp")->info("UdpSocket::on_send {}", uv_strerror(status));
 
   auto wrap = reinterpret_cast<SendData*>(req->data);
+
   delete wrap;
   if (status < 0) {
     return;
@@ -72,36 +74,36 @@ UdpSocket::UdpSocket(Loop* loop) {
   socket_.data = this;
 }
 
-void UdpSocket::listen() {
-  listen(0);
+void UdpSocket::Listen() {
+  Listen(0);
 }
 
 UdpSocket::~UdpSocket() {
-  close();
+  Close();
 }
 
-void UdpSocket::listen(ushort port) {
-  struct sockaddr_in addr;
-  uv_guard(uv_ip4_addr("0.0.0.0", port, &addr));
+void UdpSocket::Listen(ushort port) {
+  struct sockaddr_in6 addr;
+  uv_guard(uv_ip6_addr("::", port, &addr));
 
   uv_guard(uv_udp_bind(&socket_, (const struct sockaddr*) &addr, 0));
 
   uv_guard(uv_udp_recv_start(&socket_, on_alloc, on_recv));
 }
 
-void UdpSocket::close() {
+void UdpSocket::Close() {
   if (!uv_is_closing(uv_handle(ptr()))) {
     uv_close(uv_handle(&socket_), nullptr);
   }
 }
 
-void UdpSocket::send(const Buffer& data) {
+void UdpSocket::Send(const Buffer& data) {
   SPDLOG_DEBUG(spdlog::get("uvcpp"), "UdpSocket::send");
 
-  struct sockaddr_in addr;
-  uv_guard(uv_ip4_addr("127.0.0.1", 6868, &addr));
+  struct sockaddr_in6 addr;
+  uv_guard(uv_ip6_addr("::1", 6868, &addr));
 
-  auto wrap = new SendData();
+  auto wrap = new SendData(this);
   uv_buf_t buffer;
   on_alloc(uv_handle(ptr()), 256, &buffer);
   uv_guard(uv_udp_send(&wrap->req, ptr(), &buffer, 1, (const struct sockaddr*) &addr, on_send));

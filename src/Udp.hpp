@@ -20,16 +20,19 @@ class UdpSocket: public Socket {
   ~UdpSocket();
 
  public:
-  void listen();
-  void listen(ushort port);
-  void close();
+  void Listen();
+  void Listen(ushort port);
+  void Close();
 
-  void send(const Buffer& data);
+  void Send(const Buffer& data);
 
   uv_udp_t* ptr() { return &socket_; }
 
-  // TODO(ggb): Signal
   std::function<void(const Buffer&)> Data;
+
+ private:
+  void OnSent(const Buffer& data);
+  // void OnRecv(const Buffer& data, const IPEndPoint& ep);
  private:
   uv_udp_t socket_;
 };
