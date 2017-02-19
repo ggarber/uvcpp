@@ -15,3 +15,13 @@ target_link_libraries (Main
     ${PROJECT_NAME}
     ${EXTERNAL_LIBRARIES}
 )
+
+install (
+  DIRECTORY ${CMAKE_SOURCE_DIR}/src/
+  DESTINATION include/${PROJECT_NAME}
+  FILES_MATCHING PATTERN "*.hpp"
+)
+install (
+  TARGETS ${PROJECT_NAME}
+  DESTINATION lib
+)
