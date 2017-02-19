@@ -1,9 +1,9 @@
-// Copyright 2016 <ggarber@github>
+// Copyright 2017 <ggarber@github>
 
-// #include <mutex>
-// #include <condition_variable>
+#include <gtest/gtest.h>
 
-#include "gtest/gtest.h"
+#include <mutex>  // NOLINT
+#include <condition_variable>  // NOLINT
 
 #include "Loop.hpp"
 #include "Udp.hpp"
@@ -54,21 +54,40 @@ TEST_F(UdpSocketTest, CloseAfterListen) {
   udp.close();
 }
 
+// Not using it yet, but probably soon
+// class Waiteable {
+// public:
+//  Waiteable(){
+//  };
+//
+//  void notify() {
+//    std::lock_guard<std::mutex> lk{m};
+//    ready = true;
+//    cv.notify_all();
+//  }
+//
+//  void wait() {
+//    std::unique_lock<std::mutex> lk{m};
+//    cv.wait(lk, [this] { return ready; });
+//  }
+//
+//  bool ready = false;
+//  std::mutex m;
+//  std::condition_variable cv;
+// };
+
 TEST_F(UdpSocketTest, SendAndRecv) {
   UdpSocket udp1(&loop), udp2(&loop);
-  udp1.listen(); udp2.listen();
 
-  // std::mutex m;
-  // std::condition_variable cv;
+  udp1.listen(); udp2.listen(6868);
 
-  // udp2.read([&](auto data, auto size) -> void {
-  //   ASSERT_EQ(1, size);
+  udp2.Data = [this](auto buffer) -> void {
+    // ASSERT_EQ(1, buffer.data.size());
 
-  //   cv.notify_one();
-  // });
+    loop.stop();
+  };
 
-  // upd1.send({ 0x00 })
+  udp1.send({ { 0x00 } });
 
-  // std::unique_lock<std::mutex> lk(m);
-  // cv.wait(lk);
+  loop.run();
 }

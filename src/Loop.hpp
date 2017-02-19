@@ -1,4 +1,4 @@
-// Copyright 2016 <ggarber@github>
+// Copyright 2017 <ggarber@github>
 
 #ifndef SRC_LOOP_HPP_
 #define SRC_LOOP_HPP_
@@ -22,6 +22,7 @@ class Loop {
 
  public:
   void run();
+  void stop();
 
   std::unique_ptr<uvcpp::UdpSocket> udp();
   std::unique_ptr<uvcpp::TcpSocket> tcp();

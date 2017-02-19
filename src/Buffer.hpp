@@ -1,14 +1,14 @@
-// Copyright 2016 <ggarber@github>
+// Copyright 2017 <ggarber@github>
 
 #ifndef SRC_BUFFER_HPP_
 #define SRC_BUFFER_HPP_
 
-#include <vector>
+#include <array>
 
 namespace uvcpp {
 
 struct Buffer {
-  std::vector<uint8_t> data;
+  std::array<uint8_t, 1500> data;
 };
 
 }  // namespace uvcpp

@@ -1,4 +1,4 @@
-// Copyright 2016 <ggarber@github>
+// Copyright 2017 <ggarber@github>
 
 #include "gtest/gtest.h"
 
@@ -30,13 +30,8 @@ class SignalTest: public ::testing::Test {
   }
 
   // Objects declared here can be used by all tests in the test case for Foo.
-  Signal foo;
+  Signal signal;
 };
 
 TEST_F(SignalTest, SmokeTest) {
-  int x1 = 1;
-  int x2 = 2;
-  int expected = 3;
-  int actual = foo.sum(x1, x2);
-  ASSERT_EQ(expected, actual);
 }

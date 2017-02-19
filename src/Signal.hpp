@@ -1,4 +1,4 @@
-// Copyright 2016 <ggarber@github>
+// Copyright 2017 <ggarber@github>
 
 #ifndef SRC_SIGNAL_HPP_
 #define SRC_SIGNAL_HPP_
