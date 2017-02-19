@@ -19,10 +19,12 @@ class TcpAcceptor;
 class Loop {
  public:
   Loop();
+  virtual ~Loop();
 
  public:
   void Run();
   void Stop();
+  void Close();
 
   std::unique_ptr<uvcpp::UdpSocket> udp();
   std::unique_ptr<uvcpp::TcpSocket> tcp();
