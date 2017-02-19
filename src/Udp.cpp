@@ -25,9 +25,9 @@ static void uv_guard(int res) {
 
 class SendData {
  public:
-  SendData(UdpSocket& udp): udp(udp) { req.data = this; }
+  explicit SendData(UdpSocket* udp): udp(udp) { req.data = this; }
   uv_udp_send_t req;
-  UdpSocket& udp;
+  UdpSocket* udp;
 };
 
 void on_alloc(uv_handle_t* handle, size_t suggested_size, uv_buf_t* buf) {
@@ -103,7 +103,7 @@ void UdpSocket::Send(const Buffer& data) {
   struct sockaddr_in6 addr;
   uv_guard(uv_ip6_addr("::1", 6868, &addr));
 
-  auto wrap = new SendData(*this);
+  auto wrap = new SendData(this);
   uv_buf_t buffer;
   on_alloc(uv_handle(ptr()), 256, &buffer);
   uv_guard(uv_udp_send(&wrap->req, ptr(), &buffer, 1, (const struct sockaddr*) &addr, on_send));
