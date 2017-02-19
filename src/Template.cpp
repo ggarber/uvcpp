@@ -6,10 +6,10 @@
 
 using uvcpp::Template;
 
-void Template::run() const {
+void Template::Run() const {
   std::cout << "Hello world!\n";
 }
 
-int Template::sum(int a, int b) const {
+int Template::Sum(int a, int b) const {
   return a + b;
 }
