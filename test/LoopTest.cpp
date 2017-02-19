@@ -37,7 +37,7 @@ TEST_F(LoopTest, Constructor) {
 }
 
 TEST_F(LoopTest, Run) {
-  loop.run();
+  loop.Run();
 }
 
 TEST_F(LoopTest, CreateUdpSocket) {

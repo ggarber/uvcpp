@@ -16,7 +16,7 @@ class TcpSocket: public Socket {
   explicit TcpSocket(Loop* loop);
   ~TcpSocket();
 
-  void close();
+  void Close();
 
   uv_tcp_t* ptr() { return &socket_; }
 
@@ -29,7 +29,7 @@ class TcpAcceptor: public Socket {
   explicit TcpAcceptor(Loop* loop);
   ~TcpAcceptor();
 
-  void close();
+  void Close();
 
   uv_tcp_t* ptr() { return &socket_; }
 

@@ -7,9 +7,9 @@ namespace uvcpp {
 
 class Template {
  public:
-  void run() const;
+  void Run() const;
 
-  int sum(int a, int b) const;
+  int Sum(int a, int b) const;
 };
 
 }  // namespace uvcpp

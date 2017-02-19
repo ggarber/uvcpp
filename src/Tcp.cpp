@@ -18,10 +18,10 @@ TcpSocket::TcpSocket(Loop* loop) {
 }
 
 TcpSocket::~TcpSocket() {
-  close();
+  Close();
 }
 
-void TcpSocket::close() {
+void TcpSocket::Close() {
   uv_close(uv_handle(ptr()), nullptr);
 }
 
@@ -30,9 +30,9 @@ TcpAcceptor::TcpAcceptor(Loop* loop) {
 }
 
 TcpAcceptor::~TcpAcceptor() {
-  close();
+  Close();
 }
 
-void TcpAcceptor::close() {
+void TcpAcceptor::Close() {
   uv_close(uv_handle(ptr()), nullptr);
 }

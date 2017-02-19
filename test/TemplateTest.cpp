@@ -37,6 +37,6 @@ TEST_F(TemplateTest, SmokeTest) {
   int x1 = 1;
   int x2 = 2;
   int expected = 3;
-  int actual = foo.sum(x1, x2);
+  int actual = foo.Sum(x1, x2);
   ASSERT_EQ(expected, actual);
 }
