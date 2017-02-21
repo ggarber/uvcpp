@@ -1,6 +1,6 @@
 include (ExternalProject)
 
-set (EXTERNAL_LIBRARIES uv pthread PARENT_SCOPE)
+set (EXTERNAL_LIBRARIES uv pthread rt PARENT_SCOPE)
 set (EXTERNAL_PROJECTS spdlog_project libuv_project PARENT_SCOPE)
 
 set (EXTERNAL_TEST_LIBRARIES gtest PARENT_SCOPE)
@@ -28,7 +28,7 @@ externalproject_add (libuv_project
   GIT_TAG v1.x
   BUILD_IN_SOURCE 1
   UPDATE_COMMAND ""
-  CONFIGURE_COMMAND ./autogen.sh COMMAND ./configure --prefix=${CMAKE_BINARY_DIR}/ext --enable-shared=no
-  BUILD_COMMAND CFLAGS="-fPIC" make
+  CONFIGURE_COMMAND ./autogen.sh COMMAND ./configure --prefix=${CMAKE_BINARY_DIR}/ext --enable-shared=no --with-pic
+  BUILD_COMMAND make
   INSTALL_COMMAND make install
 )
