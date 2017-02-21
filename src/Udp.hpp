@@ -3,12 +3,13 @@
 #ifndef SRC_UDP_HPP_
 #define SRC_UDP_HPP_
 
-#include <uv.h>
-
+#include <memory>
 #include <functional>
 
 #include "Socket.hpp"
 #include "Buffer.hpp"
+
+typedef struct uv_udp_s uv_udp_t;
 
 namespace uvcpp {
 
@@ -21,12 +22,12 @@ class UdpSocket: public Socket {
 
  public:
   void Listen();
-  void Listen(ushort port);
+  void Listen(unsigned short port);
   void Close();
 
   void Send(const Buffer& data);
 
-  uv_udp_t* ptr() { return &socket_; }
+  uv_udp_t* ptr() { return socket_.get(); }
 
   std::function<void(const Buffer&)> Data;
 
@@ -34,7 +35,7 @@ class UdpSocket: public Socket {
   void OnSent(const Buffer& data);
   // void OnRecv(const Buffer& data, const IPEndPoint& ep);
  private:
-  uv_udp_t socket_;
+  std::unique_ptr<uv_udp_t, void(*)(uv_udp_t*)> socket_;
 };
 
 }  // namespace uvcpp

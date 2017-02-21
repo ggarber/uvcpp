@@ -2,6 +2,7 @@
 
 #include "Udp.hpp"
 
+#include <uv.h>
 #include <spdlog/spdlog.h>
 
 #include <exception>
@@ -67,11 +68,12 @@ void on_send(uv_udp_send_t *req, int status) {
   }
 }
 
-UdpSocket::UdpSocket(Loop* loop) {
+UdpSocket::UdpSocket(Loop* loop):
+    socket_(new uv_udp_t, [](uv_udp_t *socket) { delete socket; }) {
   SPDLOG_DEBUG(spdlog::get("uvcpp"), "UdpSocket:");
 
-  uv_guard(uv_udp_init(loop->ptr(), &socket_));
-  socket_.data = this;
+  uv_guard(uv_udp_init(loop->ptr(), ptr()));
+  socket_->data = this;
 }
 
 void UdpSocket::Listen() {
@@ -82,18 +84,18 @@ UdpSocket::~UdpSocket() {
   Close();
 }
 
-void UdpSocket::Listen(ushort port) {
+void UdpSocket::Listen(unsigned short port) {
   struct sockaddr_in6 addr;
   uv_guard(uv_ip6_addr("::", port, &addr));
 
-  uv_guard(uv_udp_bind(&socket_, (const struct sockaddr*) &addr, 0));
+  uv_guard(uv_udp_bind(ptr(), (const struct sockaddr*) &addr, 0));
 
-  uv_guard(uv_udp_recv_start(&socket_, on_alloc, on_recv));
+  uv_guard(uv_udp_recv_start(ptr(), on_alloc, on_recv));
 }
 
 void UdpSocket::Close() {
   if (!uv_is_closing(uv_handle(ptr()))) {
-    uv_close(uv_handle(&socket_), nullptr);
+    uv_close(uv_handle(ptr()), nullptr);
   }
 }
 

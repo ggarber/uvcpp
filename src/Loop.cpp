@@ -12,8 +12,12 @@ using uvcpp::UdpSocket;
 using uvcpp::TcpSocket;
 using uvcpp::TcpAcceptor;
 
-Loop::Loop(): loop_(new uv_loop_t, [](uv_loop_t *loop) { uv_loop_close(loop); delete loop; }) {
+Loop::Loop(): loop_(new uv_loop_t, [](auto loop) { delete loop; }) {
   uv_loop_init(ptr());
+}
+
+Loop::~Loop() {
+  Close();
 }
 
 void Loop::Run() {
@@ -22,6 +26,10 @@ void Loop::Run() {
   int res = uv_run(ptr(), UV_RUN_DEFAULT);
 
   spdlog::get("uvcpp")->info("Loop::end");
+}
+
+void Loop::Close() {
+  uv_loop_close(ptr());
 }
 
 void Loop::Stop() {
