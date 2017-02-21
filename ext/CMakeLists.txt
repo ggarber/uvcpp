@@ -29,6 +29,6 @@ externalproject_add (libuv_project
   BUILD_IN_SOURCE 1
   UPDATE_COMMAND ""
   CONFIGURE_COMMAND ./autogen.sh COMMAND ./configure --prefix=${CMAKE_BINARY_DIR}/ext --enable-shared=no
-  BUILD_COMMAND make
+  BUILD_COMMAND CFLAGS="-fPIC" make
   INSTALL_COMMAND make install
 )
