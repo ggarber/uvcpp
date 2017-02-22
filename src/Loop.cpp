@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+#include "Uv.hpp"
+
 using uvcpp::Loop;
 using uvcpp::UdpSocket;
 using uvcpp::TcpSocket;
@@ -23,7 +25,7 @@ Loop::~Loop() {
 void Loop::Run() {
   spdlog::get("uvcpp")->info("Loop::begin");
 
-  int res = uv_run(ptr(), UV_RUN_DEFAULT);
+  uvcpp::uv_guard(uv_run(ptr(), UV_RUN_DEFAULT));
 
   spdlog::get("uvcpp")->info("Loop::end");
 }
